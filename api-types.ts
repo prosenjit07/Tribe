@@ -1,4 +1,4 @@
-type TMessageAttachment = {
+export type TMessageAttachment = {
     uuid: string;
     type: "image";
     url: string;
@@ -6,13 +6,13 @@ type TMessageAttachment = {
     height: number;
   };
   
-  type TReaction = {
+export type TReaction = {
     uuid: string;
     participantUuid: string;
     value: string;
   };
   
-  type TParticipant = {
+export type TParticipant = {
     uuid: string;
     name: string;
     bio?: string;
@@ -23,7 +23,7 @@ type TMessageAttachment = {
     updatedAt: number;
   };
   
-  type TMessage = {
+export type TMessage = {
     uuid: string;
     text: string;
     attachments: TMessageAttachment[];
@@ -34,6 +34,6 @@ type TMessageAttachment = {
     updatedAt: number;
   };
   
-  type TMessageJSON = Omit<TMessage, "replyToMessageUuid"> & {
+export type TMessageJSON = Omit<TMessage, "replyToMessageUuid"> & {
     replyToMessage?: Omit<TMessage, "replyToMessageUuid">;
   };

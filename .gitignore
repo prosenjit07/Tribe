@@ -1,0 +1,15 @@
+node_modules
+package-lock.json
+yarn.lock
+build
+.yarnrc
+.yarnrc
+yarn-error.log
+expo
+.expo
+.expo-shared
+.DS_Store
+coverage
+npm-debug.log
+*.log
+.cache
