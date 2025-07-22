@@ -30,39 +30,34 @@ export const MessageInput: React.FC<MessageInputProps> = ({
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-    >
-      <View style={[styles.container, { paddingBottom: insets.bottom }]}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.textInput}
-            value={text}
-            onChangeText={setText}
-            placeholder="Type a message..."
-            placeholderTextColor="#999"
-            multiline
-            maxLength={1000}
-            editable={!isLoading}
+    <View style={styles.container}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.textInput}
+          value={text}
+          onChangeText={setText}
+          placeholder="Type a message..."
+          placeholderTextColor="#999"
+          multiline
+          maxLength={1000}
+          editable={!isLoading}
+        />
+        <TouchableOpacity
+          style={[
+            styles.sendButton,
+            (!text.trim() || isLoading) && styles.sendButtonDisabled,
+          ]}
+          onPress={handleSend}
+          disabled={!text.trim() || isLoading}
+        >
+          <Ionicons
+            name="send"
+            size={20}
+            color={text.trim() && !isLoading ? 'white' : '#999'}
           />
-          <TouchableOpacity
-            style={[
-              styles.sendButton,
-              (!text.trim() || isLoading) && styles.sendButtonDisabled,
-            ]}
-            onPress={handleSend}
-            disabled={!text.trim() || isLoading}
-          >
-            <Ionicons
-              name="send"
-              size={20}
-              color={text.trim() && !isLoading ? 'white' : '#999'}
-            />
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 

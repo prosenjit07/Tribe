@@ -6,6 +6,8 @@ import {
   Alert,
   RefreshControl,
   ListRenderItem,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -224,35 +226,41 @@ export const ChatScreen: React.FC = () => {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <StatusBar style="dark" />
-        
-        <FlatList
-          ref={flatListRef}
-          data={chatItems}
-          renderItem={renderChatItem}
-          keyExtractor={(item) => item.id}
-          style={styles.messagesList}
-          contentContainerStyle={styles.messagesContent}
-          refreshControl={
-            <RefreshControl
-              refreshing={isLoadingMessages}
-              onRefresh={initializeChat}
-            />
-          }
-          onContentSizeChange={() => {
-            // Auto-scroll to bottom when new messages arrive
-            if (chatItems.length > 0) {
-              flatListRef.current?.scrollToEnd({ animated: true });
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={0}
+      >
+        <SafeAreaView style={styles.container}>
+          <StatusBar style="dark" />
+          
+          <FlatList
+            ref={flatListRef}
+            data={chatItems}
+            renderItem={renderChatItem}
+            keyExtractor={(item) => item.id}
+            style={styles.messagesList}
+            contentContainerStyle={styles.messagesContent}
+            refreshControl={
+              <RefreshControl
+                refreshing={isLoadingMessages}
+                onRefresh={initializeChat}
+              />
             }
-          }}
-        />
-        
-        <MessageInput
-          onSendMessage={handleSendMessage}
-          isLoading={isSendingMessage}
-        />
-      </SafeAreaView>
+            onContentSizeChange={() => {
+              // Auto-scroll to bottom when new messages arrive
+              if (chatItems.length > 0) {
+                flatListRef.current?.scrollToEnd({ animated: true });
+              }
+            }}
+          />
+          
+          <MessageInput
+            onSendMessage={handleSendMessage}
+            isLoading={isSendingMessage}
+          />
+        </SafeAreaView>
+      </KeyboardAvoidingView>
     </SafeAreaProvider>
   );
 };
